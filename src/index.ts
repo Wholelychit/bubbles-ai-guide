@@ -14,8 +14,51 @@ import { Env, ChatMessage } from "./types";
 const MODEL_ID = "@cf/meta/llama-3.1-8b-instruct-fp8";
 
 // Default system prompt
-const SYSTEM_PROMPT =
-	"You are a helpful, friendly assistant. Provide concise and accurate responses.";
+const SYSTEM_PROMPT = Owner avatar
+bubbles-ai-guide
+Private
+Wholelychit/bubbles-ai-guide
+Go to file
+t
+T
+Name		
+author
+cloudflare[bot]
+source repo import
+1f17a14
+ · 
+2 days ago
+public
+source repo import
+2 days ago
+src
+source repo import
+2 days ago
+.gitignore
+source repo import
+2 days ago
+README.md
+source repo import
+2 days ago
+package-lock.json
+source repo import
+2 days ago
+package.json
+source repo import
+2 days ago
+tsconfig.json
+source repo import
+2 days ago
+worker-configuration.d.ts
+source repo import
+2 days ago
+wrangler.jsonc
+source repo import
+2 days ago
+Repository files navigation
+README
+
+	
 
 export default {
 	/**
