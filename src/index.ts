@@ -14,134 +14,36 @@ import { Env, ChatMessage } from "./types";
 const MODEL_ID = "@cf/meta/llama-3.1-8b-instruct-fp8";
 
 // Default system prompt
-const SYSTEM_PROMPT =
-bubbles-ai-guide
-Private
-Wholelychit/bubbles-ai-guide
-Go to file
-t
-T
-Name		
-author
-cloudflare[bot]
-source repo import
-1f17a14
- · 
-2 days ago
-public
-source repo import
-2 days ago
-src
-source repo import
-2 days ago
-.gitignore
-source repo import
-2 days ago
-README.md
-source repo import
-2 days ago
-package-lock.json
-source repo import
-2 days ago
-package.json
-source repo import
-2 days ago
-tsconfig.json
-source repo import
-2 days ago
-worker-configuration.d.ts
-source repo import
-2 days ago
-wrangler.jsonc
-source repo import
-2 days ago
-Repository files navigation
-README
+const SYSTEM_PROMPT = `
+You are Bubbles AI, a reading tutor for children ages 6–12.
 
-	
+Your job:
+- Create simple reading lessons
+- Use short sentences
+- Keep language Grade 2–6 level
+- Be friendly and encouraging
 
-export default {
-	/**
-	 * Main request handler for the Worker
-	 */
-	async fetch(
-		request: Request,
-		env: Env,
-		ctx: ExecutionContext,
-	): Promise<Response> {
-		const url = new URL(request.url);
+OUTPUT RULES (IMPORTANT):
+When asked for lessons, ALWAYS respond in JSON format only:
 
-		// Handle static assets (frontend)
-		if (url.pathname === "/" || !url.pathname.startsWith("/api/")) {
-			return env.ASSETS.fetch(request);
-		}
-
-		// API Routes
-		if (url.pathname === "/api/chat") {
-			// Handle POST requests for chat
-			if (request.method === "POST") {
-				return handleChatRequest(request, env);
-			}
-
-			// Method not allowed for other request types
-			return new Response("Method not allowed", { status: 405 });
-		}
-
-		// Handle 404 for unmatched routes
-		return new Response("Not found", { status: 404 });
-	},
-} satisfies ExportedHandler<Env>;
-
-/**
- * Handles chat API requests
- */
-async function handleChatRequest(
-	request: Request,
-	env: Env,
-): Promise<Response> {
-	try {
-		// Parse JSON request body
-		const { messages = [] } = (await request.json()) as {
-			messages: ChatMessage[];
-		};
-
-		// Add system prompt if not present
-		if (!messages.some((msg) => msg.role === "system")) {
-			messages.unshift({ role: "system", content: SYSTEM_PROMPT });
-		}
-
-		const stream = await env.AI.run(
-			MODEL_ID,
-			{
-				messages,
-				max_tokens: 1024,
-				stream: true,
-			},
-			{
-				// Uncomment to use AI Gateway
-				// gateway: {
-				//   id: "YOUR_GATEWAY_ID", // Replace with your AI Gateway ID
-				//   skipCache: false,      // Set to true to bypass cache
-				//   cacheTtl: 3600,        // Cache time-to-live in seconds
-				// },
-			},
-		);
-
-		return new Response(stream, {
-			headers: {
-				"content-type": "text/event-stream; charset=utf-8",
-				"cache-control": "no-cache",
-				connection: "keep-alive",
-			},
-		});
-	} catch (error) {
-		console.error("Error processing chat request:", error);
-		return new Response(
-			JSON.stringify({ error: "Failed to process request" }),
-			{
-				status: 500,
-				headers: { "content-type": "application/json" },
-			},
-		);
-	}
+{
+  "story": "short reading passage",
+  "questions": [
+    "question 1",
+    "question 2",
+    "question 3"
+  ],
+  "vocabulary": {
+    "word": "definition"
+  },
+  "challenge_question": "one deeper thinking question"
 }
+
+DO NOT:
+- explain
+- add commentary
+- break JSON format
+
+You are part of ReadEasy30, a learning platform.
+`;
+🧭 STEP 2 — NO OTH
