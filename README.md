@@ -1,153 +1,85 @@
-# LLM Chat Application Template
+# Bubbles AI Guide
 
-A simple, ready-to-deploy chat application template powered by Cloudflare Workers AI. This template provides a clean starting point for building AI chat applications with streaming responses.
+Bubbles AI Guide is a small Cloudflare Workers AI chat app for ReadEasy30. It acts as a calm reading coach that can create short lessons, vocabulary help, simple questions, and parent/helper tips.
 
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/llm-chat-app-template)
+## Current Purpose
 
-<!-- dash-content-start -->
+This repo is for the Bubbles reading-coach guide, not a general AI chatbot.
 
-## Demo
+Bubbles should help:
 
-This template demonstrates how to build an AI-powered chat interface using Cloudflare Workers AI with streaming responses. It features:
+- Children practicing early reading
+- Parents and helpers supporting a reader
+- Adult beginners who want simple, respectful reading practice
+- ESL learners who need clear vocabulary and short passages
+- ReadEasy30 lesson creation and support workflows
 
-- Real-time streaming of AI responses using Server-Sent Events (SSE)
-- Easy customization of models and system prompts
-- Support for AI Gateway integration
-- Clean, responsive UI that works on mobile and desktop
+## Tech Stack
 
-## Features
+- Cloudflare Workers
+- Cloudflare Workers AI
+- TypeScript
+- Plain HTML, CSS, and JavaScript in `public/`
+- Wrangler for local development and deployment
 
-- 💬 Simple and responsive chat interface
-- ⚡ Server-Sent Events (SSE) for streaming responses
-- 🧠 Powered by Cloudflare Workers AI LLMs
-- 🛠️ Built with TypeScript and Cloudflare Workers
-- 📱 Mobile-friendly design
-- 🔄 Maintains chat history on the client
-- 🔎 Built-in Observability logging
-<!-- dash-content-end -->
-
-## Getting Started
-
-### Prerequisites
-
-- [Node.js](https://nodejs.org/) (v18 or newer)
-- [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/install-and-update/)
-- A Cloudflare account with Workers AI access
-
-### Installation
-
-1. Clone this repository:
-
-   ```bash
-   git clone https://github.com/cloudflare/templates.git
-   cd templates/llm-chat-app
-   ```
-
-2. Install dependencies:
-
-   ```bash
-   npm install
-   ```
-
-3. Generate Worker type definitions:
-   ```bash
-   npm run cf-typegen
-   ```
-
-### Development
-
-Start a local development server:
-
-```bash
-npm run dev
-```
-
-This will start a local server at http://localhost:8787.
-
-Note: Using Workers AI accesses your Cloudflare account even during local development, which will incur usage charges.
-
-### Deployment
-
-Deploy to Cloudflare Workers:
-
-```bash
-npm run deploy
-```
-
-### Monitor
-
-View real-time logs associated with any deployed Worker:
-
-```bash
-npm wrangler tail
-```
+Do not switch this project to React, Vite, Next.js, or another framework unless that decision is made deliberately in a future checkpoint.
 
 ## Project Structure
 
-```
+```text
 /
-├── public/             # Static assets
-│   ├── index.html      # Chat UI HTML
-│   └── chat.js         # Chat UI frontend script
+├── public/
+│   ├── index.html      # Bubbles chat interface
+│   └── chat.js         # Frontend chat behavior
 ├── src/
-│   ├── index.ts        # Main Worker entry point
-│   └── types.ts        # TypeScript type definitions
-├── test/               # Test files
-├── wrangler.jsonc      # Cloudflare Worker configuration
-├── tsconfig.json       # TypeScript configuration
-└── README.md           # This documentation
+│   ├── index.ts        # Worker API and Bubbles system prompt
+│   └── types.ts        # Worker types
+├── package.json        # Scripts and dependencies
+├── wrangler.jsonc      # Cloudflare Worker config
+└── README.md
 ```
 
-## How It Works
+## Main Scripts
 
-### Backend
+```bash
+npm install
+npm run check
+npm run dev
+npm run deploy
+```
 
-The backend is built with Cloudflare Workers and uses the Workers AI platform to generate responses. The main components are:
+`npm run check` runs TypeScript checking and a Wrangler dry-run deploy.
 
-1. **API Endpoint** (`/api/chat`): Accepts POST requests with chat messages and streams responses
-2. **Streaming**: Uses Server-Sent Events (SSE) for real-time streaming of AI responses
-3. **Workers AI Binding**: Connects to Cloudflare's AI service via the Workers AI binding
+## Bubbles Behavior Rules
 
-### Frontend
+Bubbles should:
 
-The frontend is a simple HTML/CSS/JavaScript application that:
+- Use kind, calm, plain language
+- Keep most answers short
+- Help with reading practice, vocabulary, questions, and helper tips
+- Encourage slow reading and rereading
+- Avoid collecting private information about children
+- Avoid diagnosis or medical/school-placement claims
 
-1. Presents a chat interface
-2. Sends user messages to the API
-3. Processes streaming responses in real-time
-4. Maintains chat history on the client side
+## Safe Production Build Queue
 
-## Customization
+1. Keep the Worker deployable.
+2. Keep the interface simple and mobile-friendly.
+3. Improve the Bubbles system prompt slowly and carefully.
+4. Add example lesson templates.
+5. Add safety copy for parents/helpers.
+6. Add testing and deployment notes.
+7. Connect this guide back to ReadEasy30 only when stable.
 
-### Changing the Model
+## Current Checkpoint
 
-To use a different AI model, update the `MODEL_ID` constant in `src/index.ts`. You can find available models in the [Cloudflare Workers AI documentation](https://developers.cloudflare.com/workers-ai/models/).
+- Repo confirmed: `Wholelychit/bubbles-ai-guide`
+- Default branch: `main`
+- Worker file repaired from broken template text
+- UI branded as Bubbles AI Guide
+- Frontend script hardened to avoid unsafe HTML injection
+- Project documentation added for future AI/Codex work
 
-### Using AI Gateway
+## Notes for Gerry
 
-The template includes commented code for AI Gateway integration, which provides additional capabilities like rate limiting, caching, and analytics.
-
-To enable AI Gateway:
-
-1. [Create an AI Gateway](https://dash.cloudflare.com/?to=/:account/ai/ai-gateway) in your Cloudflare dashboard
-2. Uncomment the gateway configuration in `src/index.ts`
-3. Replace `YOUR_GATEWAY_ID` with your actual AI Gateway ID
-4. Configure other gateway options as needed:
-   - `skipCache`: Set to `true` to bypass gateway caching
-   - `cacheTtl`: Set the cache time-to-live in seconds
-
-Learn more about [AI Gateway](https://developers.cloudflare.com/ai-gateway/).
-
-### Modifying the System Prompt
-
-The default system prompt can be changed by updating the `SYSTEM_PROMPT` constant in `src/index.ts`.
-
-### Styling
-
-The UI styling is contained in the `<style>` section of `public/index.html`. You can modify the CSS variables at the top to quickly change the color scheme.
-
-## Resources
-
-- [Cloudflare Workers Documentation](https://developers.cloudflare.com/workers/)
-- [Cloudflare Workers AI Documentation](https://developers.cloudflare.com/workers-ai/)
-- [Workers AI Models](https://developers.cloudflare.com/workers-ai/models/)
+This is the Bubbles AI side project. Keep it focused. It should support ReadEasy30, not replace the main ReadEasy30 website.
