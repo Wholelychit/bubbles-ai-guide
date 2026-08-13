@@ -1,0 +1,85 @@
+<!-- The Avatar and Lesson Layout -->
+<div class="lesson-container">
+  
+  <!-- This is Bubbles the Teacher -->
+  <div class="teacher-avatar">
+    <!-- Replace 'bubbles.png' with your actual image path or your GitHub Identicon link -->
+    <img src="bubbles.png" alt="Bubbles the Teacher" class="avatar-image">
+    <div class="avatar-name">Bubbles</div>
+  </div>
+
+  <!-- This is the Lesson Speech Bubble -->
+  <div class="speech-bubble">
+    <h3>Great Job! Let's practice reading.</h3>
+    <p>Read this word out loud: <strong>CAT</strong></p>
+  </div>
+
+</div>
+
+<!-- The Design Styling (Put this in your CSS file or a <style> tag) -->
+<style>
+  .lesson-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-family: Arial, sans-serif;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 15px;
+  }
+
+  .teacher-avatar {
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .avatar-image {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 3px solid #4A90E2;
+    background-color: #f0f0f0;
+  }
+
+  .avatar-name {
+    font-weight: bold;
+    color: #333;
+    margin-top: 5px;
+    font-size: 14px;
+  }
+
+  .speech-bubble {
+    position: relative;
+    background: #eef5fc;
+    border: 2px solid #4A90E2;
+    border-radius: 15px;
+    padding: 20px;
+    flex-grow: 1;
+  }
+
+  /* This makes the little arrow pointing to Bubbles */
+  .speech-bubble::after {
+    content: '';
+    position: absolute;
+    left: -12px;
+    top: 35px;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 12px solid #eef5fc;
+  }
+  
+  .speech-bubble::before {
+    content: '';
+    position: absolute;
+    left: -15px;
+    top: 34px;
+    width: 0;
+    height: 0;
+    border-top: 11px solid transparent;
+    border-bottom: 11px solid transparent;
+    border-right: 13px solid #4A90E2;
+    z-index: -1;
+  }
+</style>
